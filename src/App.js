@@ -61,30 +61,19 @@ function App() {
           isFlipped: false, 
       },
     ]
-  )
+  );
+  const [flippedCards, setFlippedCards] = useState([]);
 
   useEffect(() => {
     const renderCards = setInterval(() => {
-      const cardsArr = cards.filter(card => card.isFlipped === true);
-      switch (cardsArr.length) {
-        case 2:
-          if (cardsArr[0].imgUrl !== cardsArr[1].imgUrl) noMatch();
-          break
-        case 4:
-          if (cardsArr[1].imgUrl !== cardsArr[3].imgUrl) noMatch();
-          break
-        case 6: 
-          if (cardsArr[2].imgUrl !== cardsArr[5].imgUrl) noMatch();
-          break
-        case 8: 
-          if (cardsArr[3].imgUrl !== cardsArr[7].imgUrl) noMatch();
-          break
-        case 10: 
-          if (cardsArr[4].imgUrl !== cardsArr[9].imgUrl) noMatch();
-          else console.log('you have won the game!'); 
-          break
-        default: 
-          return
+      if (flippedCards.length === 2) {
+        if (flippedCards[0].imgUrl !== flippedCards[1].imgUrl) {
+          noMatch(); 
+          setFlippedCards([]);
+        } else {
+          console.log('match');
+          setFlippedCards([]);
+        }
       }
     }, 2000)
 
@@ -98,7 +87,7 @@ function App() {
 
     return () => clearInterval(renderCards); 
     
-  }, [cards])
+  }, [cards, flippedCards])
 
   const shuffleCards = () => {
     let currentIndex = cards.length, temporaryValue, randomIndex;
@@ -119,7 +108,9 @@ function App() {
     let cardsCopy = [...cards];
     cardsCopy[index].isFlipped = true; 
     setCards(cardsCopy);
-    console.log(cards);
+    // let flippedCardsCopy = [...flippedCards];
+    // flippedCardsCopy.push(cardsCopy[index]);
+    setFlippedCards(flippedCards => [...flippedCards, cardsCopy[index]]);
   }
 
   return (
