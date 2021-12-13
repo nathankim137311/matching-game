@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Card from './components/Card'
 import './App.css'
 import heartbreak from './jpg/heartbreak.jpg'
@@ -63,6 +63,43 @@ function App() {
     ]
   )
 
+  useEffect(() => {
+    const renderCards = setInterval(() => {
+      const cardsArr = cards.filter(card => card.isFlipped === true);
+      switch (cardsArr.length) {
+        case 2:
+          if (cardsArr[0].imgUrl !== cardsArr[1].imgUrl) noMatch();
+          break
+        case 4:
+          if (cardsArr[1].imgUrl !== cardsArr[3].imgUrl) noMatch();
+          break
+        case 6: 
+          if (cardsArr[2].imgUrl !== cardsArr[5].imgUrl) noMatch();
+          break
+        case 8: 
+          if (cardsArr[3].imgUrl !== cardsArr[7].imgUrl) noMatch();
+          break
+        case 10: 
+          if (cardsArr[4].imgUrl !== cardsArr[9].imgUrl) noMatch();
+          else console.log('you have won the game!'); 
+          break
+        default: 
+          return
+      }
+    }, 2000)
+
+    const noMatch = () => {
+      let cardsCopy = [...cards];
+      cardsCopy.forEach(card => {
+        card.isFlipped = false; 
+      }); 
+      setCards(cardsCopy);
+    }
+
+    return () => clearInterval(renderCards); 
+    
+  }, [cards])
+
   const shuffleCards = () => {
     let currentIndex = cards.length, temporaryValue, randomIndex;
 
@@ -82,7 +119,7 @@ function App() {
     let cardsCopy = [...cards];
     cardsCopy[index].isFlipped = true; 
     setCards(cardsCopy);
-    console.log(cards)
+    console.log(cards);
   }
 
   return (

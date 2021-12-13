@@ -2,7 +2,6 @@
     background-color: transparent;
     width: 175px;
     height: 250px;
-    border: 1px solid #f1f1f1;
     border-radius: 3px;
     perspective: 1000px; /* Remove this if you don't want the 3D effect */
 }
@@ -16,7 +15,7 @@
     transform-style: preserve-3d;
 }
 
-.flip-card:hover .flip-card-inner {
+.flip-card-inner.flipped {
     transform: rotateY(180deg);
 }
 
@@ -29,17 +28,16 @@
 }
 
 .flip-card-front {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 10px;
     background-color: #bbb;
     color: black;
 }
 
 .flip-card-back {
-    background-color: dodgerblue;
-    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    background-color: white;
     transform: rotateY(180deg);
 }
   
