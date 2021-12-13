@@ -1,8 +1,9 @@
 .flip-card {
     background-color: transparent;
-    width: 200px;
-    height: 300px;
+    width: 175px;
+    height: 250px;
     border: 1px solid #f1f1f1;
+    border-radius: 3px;
     perspective: 1000px; /* Remove this if you don't want the 3D effect */
 }
 
@@ -28,6 +29,10 @@
 }
 
 .flip-card-front {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
     background-color: #bbb;
     color: black;
 }
