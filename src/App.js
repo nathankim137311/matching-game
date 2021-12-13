@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import Cards from './components/Cards';
+import Card from './components/Card'
 import './App.css'
 import heartbreak from './jpg/heartbreak.jpg'
 import collegeDropout from './jpg/collegeDropout.jpeg'
@@ -79,20 +79,17 @@ function App() {
 
   const handleClick = (e) => {
     const index = e.currentTarget.id;
-    setCards((prevState) => {
-      prevState.map(
-        
-      )
-    }
-    );
-    console.log('flip card animation!')
+    let cardsCopy = [...cards];
+    cardsCopy[index].isFlipped = true; 
+    setCards(cardsCopy);
+    console.log(cards)
   }
 
   return (
     <div className="App">
       <h1>Matching Game</h1>
       <button onClick={shuffleCards}>Start Game</button>
-      <Cards cards={cards} onClick={handleClick} /> 
+      <Card cards={cards} onClick={handleClick} />
     </div>
   );
 }
