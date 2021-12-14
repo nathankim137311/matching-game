@@ -149,7 +149,7 @@ function App() {
       <h2>{moves}</h2>
       <button onClick={startGame}>Start Game</button>
       {start && <Card cards={cards} onClick={handleClick} />}
-      {end && <Message startGame={startGame} />}
+      {end && <Message moves={moves} startGame={startGame} />}
     </div>
   );
 }
