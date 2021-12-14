@@ -65,18 +65,6 @@ function App() {
   const [flippedCards, setFlippedCards] = useState([]);
 
   useEffect(() => {
-    const renderCards = setInterval(() => {
-      if (flippedCards.length === 2) {
-        if (flippedCards[0].imgUrl !== flippedCards[1].imgUrl) {
-          noMatch(); 
-          setFlippedCards([]);
-        } else {
-          console.log('match');
-          setFlippedCards([]);
-        }
-      }
-    }, 2000)
-
     const noMatch = () => {
       let cardsCopy = [...cards];
       cardsCopy.forEach(card => {
@@ -85,9 +73,19 @@ function App() {
       setCards(cardsCopy);
     }
 
-    return () => clearInterval(renderCards); 
-    
-  }, [cards, flippedCards])
+    if (flippedCards.length === 2) {
+      if (flippedCards[0].imgUrl !== flippedCards[1].imgUrl) {
+        setTimeout(() => {
+          noMatch(); 
+        }, 2000);
+        setFlippedCards([]);
+      } else {
+        console.log('match');
+        setFlippedCards([]);
+      }
+    }
+
+  }, [flippedCards, cards])
 
   const shuffleCards = () => {
     let currentIndex = cards.length, temporaryValue, randomIndex;
@@ -108,8 +106,6 @@ function App() {
     let cardsCopy = [...cards];
     cardsCopy[index].isFlipped = true; 
     setCards(cardsCopy);
-    // let flippedCardsCopy = [...flippedCards];
-    // flippedCardsCopy.push(cardsCopy[index]);
     setFlippedCards(flippedCards => [...flippedCards, cardsCopy[index]]);
   }
 
