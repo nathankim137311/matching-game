@@ -63,7 +63,8 @@ function App() {
     ]
   );
   const [flippedCards, setFlippedCards] = useState([]);
-
+  const [moves, setMoves] = useState(0);
+  
   useEffect(() => {
     const noMatch = () => {
       let cardsCopy = [...cards];
@@ -73,19 +74,39 @@ function App() {
       setCards(cardsCopy);
     }
 
+    const incrementMoves = () => {
+      setMoves(prevMoves => prevMoves + 1);
+    }
+
     if (flippedCards.length === 2) {
       if (flippedCards[0].imgUrl !== flippedCards[1].imgUrl) {
         setTimeout(() => {
           noMatch(); 
         }, 2000);
+        incrementMoves();
         setFlippedCards([]);
       } else {
         console.log('match');
+        incrementMoves(); 
         setFlippedCards([]);
       }
     }
+  }, [flippedCards, cards]);
 
-  }, [flippedCards, cards])
+  useEffect(() => {
+    const endGame = () => {
+      if (moves > 8 && moves < 12) {
+        console.log('nice job bro');
+      }
+      else if (moves > 13) {
+        console.log('you fucking suck');
+      }
+      else {
+        console.log('you are a god, french ass restaraunt');
+      }
+    }
+    if (cards.every(card => { return card.isFlipped === true })) endGame();
+  }, [cards, moves]);
 
   const shuffleCards = () => {
     let currentIndex = cards.length, temporaryValue, randomIndex;
@@ -98,7 +119,6 @@ function App() {
       cards[randomIndex] = temporaryValue;
     }
     setCards([...cards]);
-    console.log(cards);
   }
 
   const handleClick = (e) => {
@@ -112,6 +132,7 @@ function App() {
   return (
     <div className="App">
       <h1>Matching Game</h1>
+      <h2>{moves}</h2>
       <button onClick={shuffleCards}>Start Game</button>
       <Card cards={cards} onClick={handleClick} />
     </div>

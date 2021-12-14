@@ -24,8 +24,6 @@ export default function Card({ cards, onClick }) {
     );
 }
 
-// const cartClasses = triggerAnimation ? `${classes['jello-horizontal']} ${classes.cart}` : classes.cart;
-
 const stylingObject = {
     cardBack: {
         width: 100 + '%',
@@ -36,7 +34,3 @@ const stylingObject = {
         height: 140,
     }
 }
-
-// .flip-card:hover .flip-card-inner {
-//     transform: rotateY(180deg);
-// }
