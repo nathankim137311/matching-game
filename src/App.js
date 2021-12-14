@@ -65,7 +65,8 @@ function App() {
   );
   const [flippedCards, setFlippedCards] = useState([]);
   const [moves, setMoves] = useState(0);
-  const [endGame, setEndGame] = useState(false); 
+  const [end, setEnd] = useState(false); 
+  const [start, setStart] = useState(false);
 
   useEffect(() => {
     const noMatch = () => {
@@ -106,7 +107,7 @@ function App() {
       else {
         console.log('you are a god, french ass restaraunt');
       }
-      setEndGame(true); 
+      setEnd(true); 
     }
     if (cards.every(card => { return card.isFlipped === true })) endGame();
   }, [cards, moves]);
@@ -125,10 +126,13 @@ function App() {
   }
 
   const startGame = () => {
+    setStart(true);
     shuffleCards();
     let cardsCopy = [...cards];
     cardsCopy.forEach(card => {card.isFlipped = false});
     setCards(cardsCopy); 
+    setMoves(0); 
+    setEnd(false); 
   }
 
   const handleClick = (e) => {
@@ -144,8 +148,8 @@ function App() {
       <h1>Matching Game</h1>
       <h2>{moves}</h2>
       <button onClick={startGame}>Start Game</button>
-      <Card cards={cards} onClick={handleClick} />
-      {endGame && <Message startGame={startGame} />}
+      {start && <Card cards={cards} onClick={handleClick} />}
+      {end && <Message startGame={startGame} />}
     </div>
   );
 }
