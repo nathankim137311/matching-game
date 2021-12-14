@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import Card from './components/Card'
+import Message from './components/Message'
 import './App.css'
 import heartbreak from './jpg/heartbreak.jpg'
 import collegeDropout from './jpg/collegeDropout.jpeg'
@@ -64,7 +65,8 @@ function App() {
   );
   const [flippedCards, setFlippedCards] = useState([]);
   const [moves, setMoves] = useState(0);
-  
+  const [endGame, setEndGame] = useState(false); 
+
   useEffect(() => {
     const noMatch = () => {
       let cardsCopy = [...cards];
@@ -104,6 +106,7 @@ function App() {
       else {
         console.log('you are a god, french ass restaraunt');
       }
+      setEndGame(true); 
     }
     if (cards.every(card => { return card.isFlipped === true })) endGame();
   }, [cards, moves]);
@@ -121,6 +124,13 @@ function App() {
     setCards([...cards]);
   }
 
+  const startGame = () => {
+    shuffleCards();
+    let cardsCopy = [...cards];
+    cardsCopy.forEach(card => {card.isFlipped = false});
+    setCards(cardsCopy); 
+  }
+
   const handleClick = (e) => {
     const index = e.currentTarget.id;
     let cardsCopy = [...cards];
@@ -133,8 +143,9 @@ function App() {
     <div className="App">
       <h1>Matching Game</h1>
       <h2>{moves}</h2>
-      <button onClick={shuffleCards}>Start Game</button>
+      <button onClick={startGame}>Start Game</button>
       <Card cards={cards} onClick={handleClick} />
+      {endGame && <Message startGame={startGame} />}
     </div>
   );
 }
